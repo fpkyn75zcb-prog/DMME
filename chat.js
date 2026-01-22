@@ -152,7 +152,7 @@ function sendMessageToServer(message) {
       e.preventDefault();
       const text = messageInput.value.trim();
       if (!text) return;
-      sendChat(text);
+     
       sendMessageToServer(text);
       messageInput.value = '';
     });
