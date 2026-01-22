@@ -1,33 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Live Chat</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b0f17;font-family:system-ui,sans-serif;color:#fff;text-align:center}
-    .box{max-width:420px;padding:32px}
-    p{color:#cbd5e1}
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DM Me</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="box">
-    <h1>Chat With Me</h1>
-    <p>The chat bubble will appear in the bottom-right corner.</p>
-  </div>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>DM Me</h1>
+        <p class="subheadline">Private 1‑on‑1 chat. No signup. No account. Just chat.</p>
+        <div class="buttons">
+          <a class="btn btn-primary" href="chat.html">Start Chat</a>
+          <button class="btn btn-secondary">How It Works</button>
+        </div>
+      </div>
+    </section>
 
-  <!-- PASTE YOUR TAWK.TO SCRIPT RIGHT BELOW THIS LINE -->
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/69715a84b61ef8197de3545b/1jfhcj5t7';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script--></body>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-text">Open the page</div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-text">Type your message</div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-text">I reply live</div>
+        </div>
+      </div>
+      <p class="instruction-note">Chat bubble appears bottom‑right</p>
+    </section>
+
+    <!-- Why You'll Love It Section -->
+    <section class="why-love">
+      <h2>Why You’ll Love It</h2>
+      <ul class="love-list">
+        <li>Private 1‑on‑1 chat</li>
+        <li>No login required</li>
+        <li>Works on mobile &amp; desktop</li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>No signup. No tracking. Just chat.</p>
+  </footer>
+
+  <!-- PASTE TAWK.TO SCRIPT HERE -->
+</body>
 </html>
