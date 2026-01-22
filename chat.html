@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat – DM Me</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="chat-container">
+    <div id="messageArea" class="message-area"></div>
+    <form id="chatForm" class="chat-form" autocomplete="off">
+      <input id="messageInput" class="message-input" type="text" placeholder="Type a message..." required autofocus>
+      <button type="submit" class="send-button">Send</button>
+    </form>
+  </div>
+
+  <script>
+    // Chat application script
+    (function() {
+      // Assign a simple numeric ID to each user using localStorage. IDs persist across sessions.
+      const userIdKey = 'dm-me-user-id';
+      let userId = localStorage.getItem(userIdKey);
+      if (!userId) {
+        userId = Math.floor(1000 + Math.random() * 9000).toString();
+        localStorage.setItem(userIdKey, userId);
+      }
+
+      // Local storage key to persist chat messages
+      const storageKey = 'dm-me-chat-messages';
+
+      // Reference to DOM elements
+      const messageArea = document.getElementById('messageArea');
+      const messageInput = document.getElementById('messageInput');
+      const chatForm = document.getElementById('chatForm');
+
+      // Load existing messages from localStorage and display them
+      function loadMessages() {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          try {
+            const messages = JSON.parse(stored);
+            messageArea.innerHTML = '';
+            messages.forEach(msg => appendMessage(msg, false));
+            scrollToBottom();
+          } catch (e) {
+            console.error('Failed to parse messages', e);
+          }
+        }
+      }
+
+      // Append a single message to the message area; if playSound is true, beep for new messages
+      function appendMessage(msg, playSound) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        if (msg.user === userId) {
+          messageDiv.classList.add('my-message');
+        } else {
+          messageDiv.classList.add('their-message');
+        }
+        const userSpan = document.createElement('span');
+        userSpan.classList.add('user-id');
+        userSpan.textContent = 'User ' + msg.user;
+        const textSpan = document.createElement('span');
+        textSpan.classList.add('message-text');
+        textSpan.textContent = msg.text;
+        messageDiv.appendChild(userSpan);
+        messageDiv.appendChild(textSpan);
+        messageArea.appendChild(messageDiv);
+        if (playSound) {
+          beep();
+        }
+      }
+
+      // Save message to localStorage
+      function saveMessage(msg) {
+        const stored = localStorage.getItem(storageKey);
+        let messages = [];
+        if (stored) {
+          try {
+            messages = JSON.parse(stored);
+          } catch (e) {
+            messages = [];
+          }
+        }
+        messages.push(msg);
+        localStorage.setItem(storageKey, JSON.stringify(messages));
+      }
+
+      // Scroll message area to the bottom
+      function scrollToBottom() {
+        messageArea.scrollTop = messageArea.scrollHeight;
+      }
+
+      // Basic beep sound for notifications (sine wave)
+      function beep() {
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+          oscillator.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          oscillator.start();
+          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.15);
+        } catch (e) {
+          // AudioContext may fail if user hasn't interacted yet; ignore errors
+        }
+      }
+
+      // BroadcastChannel to sync messages across open tabs (not across devices)
+      const channelName = 'dm-me-chat-channel';
+      let bc;
+      if ('BroadcastChannel' in window) {
+        bc = new BroadcastChannel(channelName);
+        bc.onmessage = function(ev) {
+          const msg = ev.data;
+          if (msg && msg.type === 'chat-message') {
+            // Append message only if it's not already stored (avoid duplicates)
+            // Check localStorage length; but simply append and deduplicate by timestamp & user
+            appendMessage(msg.payload, true);
+            scrollToBottom();
+          }
+        };
+      }
+
+      // Form submission handler
+      chatForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const text = messageInput.value.trim();
+        if (!text) return;
+        const message = { user: userId, text: text, timestamp: Date.now() };
+        appendMessage(message, true);
+        saveMessage(message);
+        // Broadcast message to other tabs
+        if (bc) {
+          bc.postMessage({ type: 'chat-message', payload: message });
+        }
+        messageInput.value = '';
+        scrollToBottom();
+      });
+
+      // Initial load
+      loadMessages();
+    })();
+  </script>
+</body>
+</html>
