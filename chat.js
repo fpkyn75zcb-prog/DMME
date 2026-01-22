@@ -1,3 +1,32 @@
+// ===== DM ME CHAT – Cloudflare Live Backend اتصال =====
+
+// LIVE backend URL
+const CHAT_BACKEND = "https://edge-chat-demo.fpkyn75zcb.workers.dev";
+
+// Ask user for room once
+let room = localStorage.getItem("dmme_room");
+if (!room) {
+  room = prompt("Enter room name:");
+  localStorage.setItem("dmme_room", room);
+}
+
+// Open WebSocket connection
+const socket = new WebSocket(
+  `wss://edge-chat-demo.fpkyn75zcb.workers.dev/api/room/${room}/websocket`
+);
+
+// Receive messages
+socket.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  if (data.message) {
+    displayMessage(data.message); // uses your existing UI renderer
+  }
+};
+
+// Send messages
+function sendMessageToServer(message) {
+  socket.send(JSON.stringify({ message }));
+}
 // Real‑time chat client for DM Me using Gun.js
 //
 // This script uses the decentralized Gun database to synchronize messages
@@ -124,6 +153,7 @@
       const text = messageInput.value.trim();
       if (!text) return;
       sendChat(text);
+      sendMessageToServer(text);
       messageInput.value = '';
     });
   }
