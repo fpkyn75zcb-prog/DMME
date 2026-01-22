@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat – DM Me</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="chat-container">
+    <div id="messageArea" class="message-area"></div>
+    <form id="chatForm" class="chat-form" autocomplete="off">
+      <input id="messageInput" class="message-input" type="text" placeholder="Type a message..." required autofocus>
+      <button type="submit" class="send-button">Send</button>
+    </form>
+  </div>
+
+  <script>
+    // Chat application with shared storage and 24‑hour message expiration
+    (function () {
+      // Public KVdb bucket ID used for storing chat messages.  
+      // KVdb automatically creates buckets on the fly when keys are written,
+      // so no sign‑up or account is required. Using a hard‑coded random bucket
+      // identifier ensures all visitors share the same chat room without any
+      // personal authentication. Do NOT add a secret key or this will block
+      // public reads/writes.
+      const BUCKET_ID = 'dmmechatroom2';
+      // Prefix for message keys; each message becomes a separate key
+      const MESSAGE_PREFIX = 'msg_';
+      // Message TTL in seconds (24 hours)
+      const MESSAGE_TTL = 86400;
+
+      // Assign a simple numeric ID to each user using localStorage. IDs persist across sessions.
+      const userIdKey = 'dm-me-user-id';
+      let userId = localStorage.getItem(userIdKey);
+      if (!userId) {
+        userId = Math.floor(1000 + Math.random() * 9000).toString();
+        localStorage.setItem(userIdKey, userId);
+      }
+
+      // DOM references
+      const messageArea = document.getElementById('messageArea');
+      const messageInput = document.getElementById('messageInput');
+      const chatForm = document.getElementById('chatForm');
+
+      // Append a message to the message area
+      function appendMessage(msg, playSound) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        if (msg.user === userId) {
+          messageDiv.classList.add('my-message');
+        } else {
+          messageDiv.classList.add('their-message');
+        }
+        const userSpan = document.createElement('span');
+        userSpan.classList.add('user-id');
+        userSpan.textContent = 'User ' + msg.user;
+        const textSpan = document.createElement('span');
+        textSpan.classList.add('message-text');
+        textSpan.textContent = msg.text;
+        messageDiv.appendChild(userSpan);
+        messageDiv.appendChild(textSpan);
+        messageArea.appendChild(messageDiv);
+        if (playSound) {
+          beep();
+        }
+      }
+
+      // Scroll to bottom of message area
+      function scrollToBottom() {
+        messageArea.scrollTop = messageArea.scrollHeight;
+      }
+
+      // Simple beep for notifications
+      function beep() {
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+          oscillator.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          oscillator.start();
+          gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.15);
+        } catch (e) {
+          // ignore audio errors
+        }
+      }
+
+      // Clear all existing messages from the bucket on first load.
+      // A flag stored in sessionStorage prevents clearing on every page visit.
+      async function clearChatOnce() {
+        if (!BUCKET_ID) return;
+        const clearedKey = 'dm-me-cleared';
+        if (sessionStorage.getItem(clearedKey)) {
+          return;
+        }
+        try {
+          const url = `https://kvdb.io/${BUCKET_ID}/?values=true&format=json&prefix=${MESSAGE_PREFIX}`;
+          const res = await fetch(url);
+          if (!res.ok) return;
+          const data = await res.json();
+          for (const [key] of data) {
+            try {
+              await fetch(`https://kvdb.io/${BUCKET_ID}/${key}`, { method: 'DELETE' });
+            } catch (err) {
+              // ignore deletion errors
+            }
+          }
+        } catch (e) {
+          console.error('Failed to clear chat', e);
+        }
+        sessionStorage.setItem(clearedKey, 'true');
+      }
+
+      // Track the timestamp of the last loaded message to trigger notification sound
+      let lastLoadedTimestamp = 0;
+
+      // Fetch all messages from KVdb and display them. New messages received
+      // since the last load will trigger a notification sound.
+      async function loadMessages() {
+        if (!BUCKET_ID) {
+          return;
+        }
+        try {
+          const url = `https://kvdb.io/${BUCKET_ID}/?values=true&format=json&prefix=${MESSAGE_PREFIX}`;
+          const res = await fetch(url);
+          if (!res.ok) return;
+          const data = await res.json();
+          const messages = [];
+          const now = Date.now();
+          data.forEach(([key, value]) => {
+            try {
+              const msg = typeof value === 'string' ? JSON.parse(value) : value;
+              // Filter out messages older than 24 hours
+              if (now - msg.timestamp < MESSAGE_TTL * 1000) {
+                messages.push(msg);
+              }
+            } catch (e) {
+              // ignore invalid JSON
+            }
+          });
+          messages.sort((a, b) => a.timestamp - b.timestamp);
+          // Determine if there are new messages to play sound for
+          const newMessages = messages.filter(m => m.timestamp > lastLoadedTimestamp && m.user !== userId);
+          // Clear the current display and append messages
+          messageArea.innerHTML = '';
+          messages.forEach(msg => appendMessage(msg, false));
+          if (newMessages.length > 0) {
+            // Play sound once when new messages arrive
+            beep();
+            // Update lastLoadedTimestamp to the latest message timestamp
+            lastLoadedTimestamp = messages[messages.length - 1].timestamp;
+          }
+          scrollToBottom();
+        } catch (e) {
+          console.error('Failed to load messages', e);
+        }
+      }
+
+      // Send message to KVdb
+      async function sendMessage(text) {
+        if (!BUCKET_ID) {
+          return;
+        }
+        const timestamp = Date.now();
+        const message = { user: userId, text: text, timestamp: timestamp };
+        const key = `${MESSAGE_PREFIX}${timestamp}_${Math.floor(Math.random() * 100000)}`;
+        try {
+          await fetch(`https://kvdb.io/${BUCKET_ID}/${key}?ttl=${MESSAGE_TTL}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(message)
+          });
+        } catch (e) {
+          console.error('Failed to send message', e);
+        }
+      }
+
+      // Handle form submission
+      chatForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const text = messageInput.value.trim();
+        if (!text) return;
+        const localMsg = { user: userId, text: text, timestamp: Date.now() };
+        appendMessage(localMsg, true);
+        sendMessage(text);
+        messageInput.value = '';
+        scrollToBottom();
+      });
+
+      // Periodically fetch messages every 3 seconds for real‑time sync
+      setInterval(loadMessages, 3000);
+      // Initial load
+      // Clear messages on first load and then begin syncing
+      clearChatOnce().then(() => {
+        // Set lastLoadedTimestamp to 0 to detect initial messages
+        lastLoadedTimestamp = 0;
+        loadMessages();
+      });
+    })();
+  </script>
+</body>
+</html>
