@@ -22,8 +22,15 @@ export async function onRequest({ params }) {
     <p id="copyStatus"></p>
   </div>
   <script>
-function copyLink() {
   navigator.clipboard.writeText(window.location.href);
+
+const status = document.getElementById("copyStatus");
+status.textContent = "Link copied";
+
+setTimeout(() => {
+  status.textContent = "";
+}, 1500);
+
 
   const status = document.getElementById('copyStatus');
   status.textContent = 'Link copied';
