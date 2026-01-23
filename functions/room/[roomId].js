@@ -22,10 +22,19 @@ export async function onRequest({ params }) {
     <p id="copyStatus"></p>
   </div>
   <script>
-  function copyLink() {
-    navigator.clipboard.writeText(window.location.href);
-    document.getElementById('copyStatus').textContent = 'Link copied!';
-  }
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href);
+
+  const status = document.getElementById('copyStatus');
+  status.textContent = 'Link copied';
+  status.style.opacity = '1';
+
+  setTimeout(() => {
+    status.style.opacity = '0';
+    status.textContent = '';
+  }, 1500);
+}
+
 </script>
 
 </body>
