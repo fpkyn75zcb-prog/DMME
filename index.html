@@ -32,7 +32,7 @@
 
     const text = await response.text();
     const data = JSON.parse(text);
-    window.location.href = `/room/${data.roomId}`;
+alert(data.roomId);
   } catch (e) {
     console.error(e);
   }
