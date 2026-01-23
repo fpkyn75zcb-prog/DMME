@@ -1,11 +1,16 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
-  // If someone is on the homepage, let Pages handle it
+  // Let homepage load
   if (url.pathname === "/") {
     return context.next();
   }
 
-  // Everything else goes to the Worker
+  // Let room pages load
+  if (url.pathname.startsWith("/room/")) {
+    return context.next();
+  }
+
+  // Everything else goes to Worker
   return context.env.WORKER.fetch(context.request);
 }
