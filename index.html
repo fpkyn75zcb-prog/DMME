@@ -22,16 +22,14 @@
       </p>
 <button id="startButton" type="button" class="primary-btn">Start Chatting</button>
     </div>
-    <script>
-  <script>
-<script>
+   <script>
 document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById('startButton');
   if (!button) return;
 
   button.addEventListener('click', async () => {
     alert('BUTTON CLICKED');
-    
+
     try {
       const response = await fetch('/create-room', {
         method: 'POST'
