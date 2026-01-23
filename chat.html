@@ -9,10 +9,17 @@
 <body>
   <div class="chat-container">
     <div id="messageArea" class="message-area"></div>
-    <form id="chatform"> class="chat-form" autocomplete="off">
-      <input id="messageInput"> class="message-input" type="text" placeholder="Type a message..." required autofocus>
-      <button type="submit" class="send-button">Send</button>
-    </form>
+    <form id="chatForm" class="chat-form" autocomplete="off">
+  <input
+    id="messageInput"
+    class="message-input"
+    type="text"
+    placeholder="Type a message..."
+    required
+    autofocus
+  />
+  <button type="submit" class="send-button">Send</button>
+</form>
   </div>
   <!-- Load Gun.js for realtime decentralized data -->
   <!-- Include the Gun-based chat client -->
