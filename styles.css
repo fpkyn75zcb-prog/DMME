@@ -191,3 +191,9 @@ button:focus {
   outline: none;
   box-shadow: none;
 }
+<input
+  id="roomName"
+  class="room-title-input"
+  placeholder="Click to name room"
+  onkeydown="if(event.key==='Enter'){saveRoomName()}"
+/>
