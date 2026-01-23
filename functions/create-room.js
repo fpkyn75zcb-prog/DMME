@@ -1,10 +1,14 @@
-export async function onRequestGet({ params }) {
+export async function onRequestPost() {
   const roomId = crypto.randomUUID();
 
   return new Response(
     JSON.stringify({ roomId }),
     {
-      headers: { "Content-Type": "application/json" }
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store"
+      }
     }
   );
 }
