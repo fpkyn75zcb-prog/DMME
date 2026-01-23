@@ -23,17 +23,19 @@
      <button id="startButton" class="primary-btn">Start Chatting</button>
     </div>
     <script>
-      document.getElementById('startButton').addEventListener('click', async () => {
-        try {
-          // POST to the server to create a room. In a production build this
-          // request should only be made after a successful payment transaction.
-          const response = await fetch('/create-room', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-});
+     document.getElementById('startButton').addEventListener('click', async () => {
+  try {
+    const response = await fetch('/create-room', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
 
-const data = await response.json();
-window.location.href = `/room/${data.roomId}`;
+    const data = await response.json();
+    window.location.href = `/room/${data.roomId}`;
+  } catch (e) {
+    alert('Error creating room');
+  }
+});
 </script>
 </body>
 </html>
