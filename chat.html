@@ -37,32 +37,29 @@
     input.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
   });
-<script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("chatForm");
-  const input = document.getElementById("messageInput");
-  const chatBox = document.getElementById("messageArea");
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+const form = document.getElementById("chatForm");
+const input = document.getElementById("messageInput");
+const chatBox = document.getElementById("messageArea");
 
-    const message = input.value.trim();
-    if (!message) return;
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    const msg = document.createElement("div");
-    msg.textContent = message;
-    msg.style.padding = "8px";
-    msg.style.margin = "6px 0";
-    msg.style.background = "#eee";
-    msg.style.borderRadius = "6px";
+  const message = input.value.trim();
+  if (message === "") return;
 
-    chatBox.appendChild(msg);
+  const msgDiv = document.createElement("div");
+  msgDiv.textContent = message;
+  msgDiv.style.color = "white";
+  msgDiv.style.marginBottom = "10px";
 
-    input.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-  });
+  chatBox.appendChild(msgDiv);
+
+  input.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+});
 </script>
+
 
   
 </body>
