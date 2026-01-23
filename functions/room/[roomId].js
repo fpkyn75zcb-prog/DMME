@@ -14,7 +14,7 @@ export async function onRequest({ params }) {
   <div class="room-header">
   <input
   id="roomName"
-  class="room-title-input"
+
   placeholder="Click to name room"
   onkeydown="if(event.key==='Enter'){saveRoomName()}"
 />
