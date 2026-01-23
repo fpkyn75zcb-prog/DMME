@@ -9,12 +9,9 @@
 <body>
   <div class="chat-container">
     <div id="messageArea" class="message-area"></div>
-    <form id="chatForm" class="chat-form" autocomplete="off">
-  <input
-    id="messageInput"
-    class="message-input"
-    type="text"
-    placeholder="Type a message..."
+    <form id="chatForm"> 
+  <input id="messageInput" type="text" />
+   
     required
     autofocus
   />
@@ -46,6 +43,7 @@
   });
 <script>
   <script>
+  document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("chatForm");
   const input = document.getElementById("messageInput");
   const chatBox = document.getElementById("messageArea");
