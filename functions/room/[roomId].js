@@ -20,7 +20,6 @@ export async function onRequest({ params }) {
 
   <div class="chat-container">
     <p><strong>${roomId}</strong></p>
-    <p>This room will expire in 24 hours.</p>
     https://dmme.pages.dev/room/069380a3-2330-4bef-a729-35a62714923c    <button onclick="copyLink()" class="primary-btn">Copy Room Link</button>
     <p id="copyStatus"></p>
   </div>
