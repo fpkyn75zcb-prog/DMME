@@ -1,4 +1,4 @@
-export async function onRequestPost() {
+export async function onRequestGet({ params }) {
   const roomId = crypto.randomUUID();
 
   return new Response(
