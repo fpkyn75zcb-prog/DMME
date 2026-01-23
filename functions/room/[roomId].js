@@ -13,8 +13,8 @@ export async function onRequest({ params }) {
 <body class="room">
   <div class="room-header">
     <h1 class="room-title">Room ID</h1>
-    <button class="copy-btn" onclick="navigator.clipboard.writeText(window.location.href)">
-<button id="copyLinkBtn">Copy Link</button>
+    <button id="copyLinkBtn" class="copy-btn" onclick="copyLink()">Copy Link</button>
+
   </div>
 
   <div class="chat-container">
