@@ -1,12 +1,17 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
-  // Let homepage load
+  // Allow homepage
   if (url.pathname === "/") {
     return context.next();
   }
 
-  // Let room pages load
+  // Allow create-room endpoint
+  if (url.pathname === "/create-room") {
+    return context.next();
+  }
+
+  // Allow room pages
   if (url.pathname.startsWith("/room/")) {
     return context.next();
   }
@@ -14,3 +19,4 @@ export async function onRequest(context) {
   // Everything else goes to Worker
   return context.env.WORKER.fetch(context.request);
 }
+
