@@ -23,19 +23,20 @@
 <button id="startButton" type="button" class="primary-btn">Start Chatting</button>
     </div>
     <script>
-    document.getElementById('startButton').addEventListener('click', async () => {
-  
+   document.getElementById('startButton').addEventListener('click', async () => {
   try {
+    const response = await fetch('/create-room', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
 
-   const response = await fetch('/create-room', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' }
+    const text = await response.text();
+    const data = JSON.parse(text);
+    window.location.href = `/room/${data.roomId}`;
+  } catch (e) {
+    console.error(e);
+  }
 });
-
-const text = await response.text();
-const data = JSON.parse(text);
-
-window.location.href = `/room/${data.roomId}`;
 
 </script>
 </body>
