@@ -1,4 +1,4 @@
-export async function onRequest({ params }) {
+export async function onRequestGet({ params }) {
   const roomId = params.roomId;
 
   return new Response(
