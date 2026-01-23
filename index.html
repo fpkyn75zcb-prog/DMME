@@ -20,7 +20,7 @@
         Create a room for $2, share the link, and chat in real time.<br />
         Unlimited guests. Room expires in 24 hours.
       </p>
-      <button id="startButton" class="primary-btn">Start Chatting</button>
+     <button id="startButton" class="primary-btn">Start Chatting</button>
     </div>
     <script>
       document.getElementById('startButton').addEventListener('click', async () => {
@@ -28,6 +28,8 @@
           // POST to the server to create a room. In a production build this
           // request should only be made after a successful payment transaction.
           const response = await fetch('/create-room', {
+            const data = await response.json();
+window.location.href = `/room/${data.roomId}`;
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
           });
