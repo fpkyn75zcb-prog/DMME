@@ -3,6 +3,8 @@ export async function onRequestPost() {
 
   return new Response(
     JSON.stringify({ roomId }),
-    { headers: { "Content-Type": "application/json" } }
+    {
+      headers: { "Content-Type": "application/json" }
+    }
   );
 }
