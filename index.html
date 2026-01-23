@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!button) return;
 
   button.addEventListener('click', async () => {
+    alert('BUTTON CLICKED');
+    
     try {
       const response = await fetch('/create-room', {
         method: 'POST'
