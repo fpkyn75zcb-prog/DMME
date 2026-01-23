@@ -23,8 +23,10 @@
 <button id="startButton" type="button" class="primary-btn">Start Chatting</button>
     </div>
     <script>
-     document.getElementById('startButton').addEventListener('click', async () => {
+    document.getElementById('startButton').addEventListener('click', async () => {
+  alert('clicked');
   try {
+
     const response = await fetch('/create-room', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
