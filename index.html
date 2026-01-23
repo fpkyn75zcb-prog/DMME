@@ -52,27 +52,5 @@
   <footer>
     <p>No signup. No tracking. Just chat.</p>
   </footer>
-<script>
- <script>
-  const form = document.getElementById("chat-form");
-  const input = document.getElementById("message-input");
-  const chatBox = document.getElementById("chat-box");
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const message = input.value.trim();
-    if (message === "") return;
-
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message sent";
-    msgDiv.textContent = message;
-
-    chatBox.appendChild(msgDiv);
-
-    input.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-  });
-</script>
 </body>
 </html>
