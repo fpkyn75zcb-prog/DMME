@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DM ME — Disposable Chat</title>
+    <!-- Import retro‑inspired font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="landing">
+    <div class="container">
+      <h1 class="headline">
+        Private chat rooms. One link. Gone in 24 hours.
+      </h1>
+      <p class="subtext">
+        Create a room for $2, share the link, and chat in real time.<br />
+        Unlimited guests. Room expires in 24 hours.
+      </p>
+      <button id="startButton" class="primary-btn">Start Chatting</button>
+    </div>
+    <script>
+      document.getElementById('startButton').addEventListener('click', async () => {
+        try {
+          // POST to the server to create a room. In a production build this
+          // request should only be made after a successful payment transaction.
+          const response = await fetch('/create-room', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+          });
+          const data = await response.json();
+          if (data.roomUrl) {
+            window.location.href = data.roomUrl;
+          } else {
+            alert('Failed to create room');
+          }
+        } catch (error) {
+          console.error(error);
+          alert('Error creating room. Please try again.');
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DM ME Chat Room</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="room">
+    <!-- Header with optional title, copy link and countdown -->
+    <div class="room-header">
+      <input
+        id="roomTitle"
+        class="room-title"
+        placeholder="Add a room title (optional)"
+        aria-label="Room title"
+      />
+      <button id="copyLink" class="copy-btn" aria-label="Copy room link">
+        Copy Link
+      </button>
+      <div class="timer" id="timer">24:00:00</div>
+    </div>
+
+    <!-- Messages list -->
+    <div class="chat-container" id="messages"></div>
+
+    <!-- Input area for sending messages -->
+    <form id="chatForm" class="chat-form" autocomplete="off">
+      <input
+        type="text"
+        id="messageInput"
+        class="message-input"
+        placeholder="Type a message"
+        required
+      />
+      <button type="submit" class="send-btn">Send</button>
+    </form>
+
+    <!-- Include Socket.IO client library -->
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+    <script>
+      (function () {
+        // Extract the room token from the URL path
+        const token = window.location.pathname.split('/').pop();
+        // Connect to the Socket.IO server
+        const socket = io();
+        // Join the server side room
+        socket.emit('joinRoom', token);
+
+        // DOM elements
+        const messagesEl = document.getElementById('messages');
+        const form = document.getElementById('chatForm');
+        const input = document.getElementById('messageInput');
+        const roomTitleInput = document.getElementById('roomTitle');
+        const copyBtn = document.getElementById('copyLink');
+        const timerEl = document.getElementById('timer');
+        let titleLocked = false;
+
+        // Fetch room metadata to compute the countdown
+        fetch('/api/room/' + token)
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.expiresAt) return;
+            const expiresAt = data.expiresAt;
+            function updateTimer() {
+              const now = Date.now();
+              const diff = expiresAt - now;
+              if (diff <= 0) {
+                timerEl.textContent = '00:00:00';
+                // Reload to trigger expired state
+                window.location.replace('/');
+                return;
+              }
+              const hrs = Math.floor(diff / 3600000);
+              const mins = Math.floor((diff % 3600000) / 60000);
+              const secs = Math.floor((diff % 60000) / 1000);
+              timerEl.textContent = String(hrs).padStart(2, '0') +
+                ':' + String(mins).padStart(2, '0') +
+                ':' + String(secs).padStart(2, '0');
+              requestAnimationFrame(updateTimer);
+            }
+            updateTimer();
+          });
+
+        // Lock the title after the user types once and leaves the field
+        roomTitleInput.addEventListener('blur', () => {
+          if (!titleLocked && roomTitleInput.value.trim() !== '') {
+            roomTitleInput.disabled = true;
+            titleLocked = true;
+          }
+        });
+
+        // Listen for initial messages
+        socket.on('initMessages', (msgs) => {
+          msgs.forEach((m) => addMessage(m));
+        });
+        // Listen for new messages
+        socket.on('newMessage', (msg) => {
+          addMessage(msg);
+        });
+        // If the room has expired on the server
+        socket.on('roomExpired', () => {
+          alert('This room has expired.');
+          window.location.replace('/');
+        });
+
+        // Send a message
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const message = input.value.trim();
+          if (!message) return;
+          socket.emit('sendMessage', { token, message });
+          input.value = '';
+        });
+
+        // Copy the current URL to the clipboard
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard
+            .writeText(window.location.href)
+            .then(() => {
+              const original = copyBtn.textContent;
+              copyBtn.textContent = 'Copied!';
+              setTimeout(() => {
+                copyBtn.textContent = original;
+              }, 2000);
+            });
+        });
+
+        // Helper to sanitize and append messages
+        function addMessage(msg) {
+          const div = document.createElement('div');
+          div.className = 'message';
+          const date = new Date(msg.timestamp);
+          const timeString = date.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+          div.innerHTML =
+            '<span class="msg-time">' +
+            timeString +
+            '</span> ' +
+            escapeHtml(msg.text);
+          messagesEl.appendChild(div);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+        // Escapes HTML entities to prevent injection
+        function escapeHtml(unsafe) {
+          return unsafe.replace(/[&<"']/g, function (m) {
+            switch (m) {
+              case '&':
+                return '&amp;';
+              case '<':
+                return '&lt;';
+              case '"':
+                return '&quot;';
+              case "'":
+                return '&#039;';
+              default:
+                return m;
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
