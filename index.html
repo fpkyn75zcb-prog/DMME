@@ -28,22 +28,12 @@
           // POST to the server to create a room. In a production build this
           // request should only be made after a successful payment transaction.
           const response = await fetch('/create-room', {
-            const data = await response.json();
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+});
+
+const data = await response.json();
 window.location.href = `/room/${data.roomId}`;
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-          });
-          const data = await response.json();
-          if (data.roomUrl) {
-            window.location.href = data.roomUrl;
-          } else {
-            alert('Failed to create room');
-          }
-        } catch (error) {
-          console.error(error);
-          alert('Error creating room. Please try again.');
-        }
-      });
-    </script>
-  </body>
+</script>
+</body>
 </html>
