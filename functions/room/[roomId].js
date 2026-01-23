@@ -14,8 +14,7 @@ export async function onRequest({ params }) {
   <div class="room-header">
     <h1 class="room-title">Room ID</h1>
     <button class="copy-btn" onclick="navigator.clipboard.writeText(window.location.href)">
-
-    </button>
+<button id="copyLinkBtn">Copy Link</button>
   </div>
 
   <div class="chat-container">
