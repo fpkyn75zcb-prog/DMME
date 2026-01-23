@@ -24,19 +24,29 @@
     </div>
     <script>
   <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const button = document.getElementById('startButton');
   if (!button) return;
 
   button.addEventListener('click', async () => {
-    const response = await fetch('/create-room', {
-      method: 'POST'
-    });
+    try {
+      const response = await fetch('/create-room', {
+        method: 'POST'
+      });
 
-    const data = await response.json();
-    window.location.href = `/room/${data.roomId}`;
+      const data = await response.json();
+
+      if (data.roomId) {
+        window.location.href = `/room/${data.roomId}`;
+      }
+    } catch (err) {
+      console.error(err);
+    }
   });
 });
+</script>
+
 </script>
 
 
