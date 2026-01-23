@@ -27,17 +27,16 @@
   
   try {
 
-    const response = await fetch('/create-room', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    const data = await response.json();
-    window.location.href = `/room/${data.roomId}`;
-  } catch (e) {
-    alert('Error creating room');
-  }
+   const response = await fetch('/create-room', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' }
 });
+
+const text = await response.text();
+const data = JSON.parse(text);
+
+window.location.href = `/room/${data.roomId}`;
+
 </script>
 </body>
 </html>
