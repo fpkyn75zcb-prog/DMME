@@ -187,3 +187,7 @@ body {
   background: var(--secondary-color);
   color: var(--bg-color);
 }
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
