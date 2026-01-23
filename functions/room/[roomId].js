@@ -12,7 +12,13 @@ export async function onRequest({ params }) {
 </head>
 <body class="room">
   <div class="room-header">
-    <h1 class="room-title">Room ID</h1>
+  <input
+  id="roomName"
+  class="room-title-input"
+  placeholder="Click to name room"
+  onkeydown="if(event.key==='Enter'){saveRoomName()}"
+/>
+
     <button id="copyLinkBtn" class="copy-btn" onclick="copyLink()">Copy Link</button>
 
   </div>
