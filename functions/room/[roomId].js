@@ -21,7 +21,16 @@ export async function onRequest({ params }) {
   <div class="chat-container">
     <p><strong>${roomId}</strong></p>
     <p>This room will expire in 24 hours.</p>
+    <button onclick="copyLink()" class="primary-btn">Copy Room Link</button>
+    <p id="copyStatus"></p>
   </div>
+  <script>
+  function copyLink() {
+    navigator.clipboard.writeText(window.location.href);
+    document.getElementById('copyStatus').textContent = 'Link copied!';
+  }
+</script>
+
 </body>
 </html>
     `,
