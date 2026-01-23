@@ -9,18 +9,17 @@
 <body>
   <div class="chat-container">
     <div id="messageArea" class="message-area"></div>
-    <form id="chatForm" class="chat-form" autocomplete="off">
-      <input id="messageInput" class="message-input" type="text" placeholder="Type a message..." required autofocus>
+    <form id="chatform"> class="chat-form" autocomplete="off">
+      <input id="messageInput"> class="message-input" type="text" placeholder="Type a message..." required autofocus>
       <button type="submit" class="send-button">Send</button>
     </form>
   </div>
   <!-- Load Gun.js for realtime decentralized data -->
-  <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
   <!-- Include the Gun-based chat client -->
   
   <script>
-  const form = document.getElementById("chatform");
-  const input = document.getElementById("message-Input");
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("messageInput");
   const chatBox = document.getElementById("messageArea");
 
   form.addEventListener("submit", function (e) {
@@ -38,7 +37,32 @@
     input.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
   });
+<script>
+  <script>
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("messageInput");
+  const chatBox = document.getElementById("messageArea");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const message = input.value.trim();
+    if (!message) return;
+
+    const msg = document.createElement("div");
+    msg.textContent = message;
+    msg.style.padding = "8px";
+    msg.style.margin = "6px 0";
+    msg.style.background = "#eee";
+    msg.style.borderRadius = "6px";
+
+    chatBox.appendChild(msg);
+
+    input.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
 </script>
+
   
 </body>
 </html>
