@@ -1,7 +1,7 @@
 export async function onRequest({ params }) {
   const roomId = params.roomId;
 
-  return new Response(
+return new Response(`
     `
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +25,7 @@ export async function onRequest({ params }) {
   </div>
 
   <div class="chat-container">
+    </div>
     
  <div class="chat-input">
   <input
@@ -63,4 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   });
 </script>
+</body>
+</html>
+`, {
+  headers: { "Content-Type": "text/html" }
+});
+}
 
