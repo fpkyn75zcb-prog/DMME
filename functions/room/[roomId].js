@@ -20,6 +20,7 @@ export async function onRequest({ params }) {
 />
 
     <button id="copyLinkBtn" class="copy-btn" onclick="copyLink()">Copy Link</button>
+<p id="copyStatus"></p>
 
   </div>
 
