@@ -1,75 +1,94 @@
-export async function onRequest({ params }) {
-  const roomId = params.roomId;
-
-return new Response(`
-    `
+export async function onRequest() {
+  return new Response(`
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DM ME – Room</title>
-  <link rel="stylesheet" href="/styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat Room</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0b0b12;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .chat-container {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+    }
+    .chat-message {
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      background: #1f1f2e;
+      border-radius: 6px;
+      width: fit-content;
+      max-width: 80%;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #333;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    .chat-input button {
+      padding: 0 16px;
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
 </head>
-<body class="room">
-  <div class="room-header">
-  <input
-  id="roomName"
-
-  placeholder="Click to name room"
-  onkeydown="if(event.key==='Enter'){saveRoomName()}"
-/>
-
-    <button id="copyLinkBtn" class="copy-btn" onclick="copyLink()">Copy Link</button>
-<p id="copyStatus"></p>
-
-  </div>
+<body>
 
   <div class="chat-container" id="chat"></div>
 
-<div class="chat-input">
-  <input
-    id="messageInput"
-    class="message-input"
-    placeholder="Type a message..."
-    autocomplete="off"
-  />
-  <button id="sendBtn" class="send-btn" type="button">Send</button>
-</div>
+  <div class="chat-input">
+    <input id="messageInput" placeholder="Type a message..." />
+    <button id="sendBtn" type="button">Send</button>
+  </div>
 
-<script>
+  <script>
+    const input = document.getElementById("messageInput");
+    const sendBtn = document.getElementById("sendBtn");
+    const chat = document.getElementById("chat");
 
-  <input id="messageInput" placeholder="Type a message..." />
-  <button id="sendBtn" type="button">Send</button>
-</div>
+    function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
 
-</script>
+      const msg = document.createElement("div");
+      msg.className = "chat-message";
+      msg.textContent = text;
+      chat.appendChild(msg);
 
-<script>
-  const input = document.getElementById("messageInput");
-  const sendBtn = document.getElementById("sendBtn");
-  const chat = document.getElementById("chat");
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+    }
 
-  function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
-
-    const msg = document.createElement("div");
-    msg.textContent = text;
-    chat.appendChild(msg);
-    input.value = "";
-  }
-
-  sendBtn.addEventListener("click", sendMessage);
-  input.addEventListener("keydown", e => {
-    if (e.key === "Enter") sendMessage();
-  });
-</script>
-
+    sendBtn.addEventListener("click", sendMessage);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  </script>
 
 </body>
 </html>
 `, {
-  headers: { "Content-Type": "text/html" }
-});
+    headers: { "Content-Type": "text/html" }
+  });
 }
-
