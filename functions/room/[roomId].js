@@ -51,6 +51,20 @@ export async function onRequest() {
   </style>
 </head>
 <body>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:#0f172a;">
+  <input
+    id="roomName"
+    placeholder="Room name"
+    style="background:transparent;border:none;color:#fff;font-size:16px;outline:none;"
+  />
+  <button
+    onclick="copyLink()"
+    style="background:#3b82f6;color:#fff;border:none;padding:6px 10px;cursor:pointer;"
+  >
+    Copy Link
+  </button>
+</div>
+
 
   <div class="chat-container" id="chat"></div>
 
@@ -84,6 +98,10 @@ export async function onRequest() {
         sendMessage();
       }
     });
+    function copyLink() {
+  navigator.clipboard.writeText(window.location.href);
+}
+
   </script>
 
 </body>
