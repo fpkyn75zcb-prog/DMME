@@ -78,7 +78,8 @@ sendBtn.onclick = () => {
 
 </script>
 <input id="messageInput" placeholder="Type a message…" style="position:fixed; bottom:0; left:0; width:80%; padding:14px; border:none; outline:none;" />
-<button id="sendBtn" style="position:fixed; bottom:0; right:0; width:20%; padding:14px; border:none; background:#1e90ff; color:#fff;">Send</button>
+<button id="sendB<button id="sendBtn" class="send-btn">Send</button>
+tn" style="position:fixed; bottom:0; right:0; width:20%; padding:14px; border:none; background:#1e90ff; color:#fff;">Send</button>
 
 </body>
 </html>
