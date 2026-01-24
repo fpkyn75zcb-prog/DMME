@@ -26,7 +26,6 @@ export async function onRequest({ params }) {
 
   <div class="chat-container">
     
-    <p id="copyStatus"></p>
   </div>
   <script>
   navigator.clipboard.writeText(window.location.href);
