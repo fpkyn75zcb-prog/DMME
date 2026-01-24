@@ -32,13 +32,14 @@ export async function onRequest() {
       overflow-y: auto;
     }
     .chat-message {
-      margin-bottom: 8px;
-      padding: 8px 12px;
-      background: #1f1f2e;
-      border-radius: 6px;
-      width: fit-content;
-      max-width: 80%;
-    }
+  margin-bottom: 8px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  max-width: 80%;
+  backdrop-filter: blur(6px);
+}
+
     .chat-input {
       display: flex;
       border-top: 1px solid #333;
