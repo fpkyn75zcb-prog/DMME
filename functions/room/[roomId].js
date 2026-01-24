@@ -41,6 +41,10 @@ export async function onRequest() {
     .chat-input {
       display: flex;
       border-top: 1px solid #333;
+      position: sticky;
+      bottom: 0;
+    }
+
     }
     .chat-input input {
       flex: 1;
