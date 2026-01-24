@@ -37,35 +37,36 @@ return new Response(`
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("messageInput");
-    const sendBtn = document.getElementById("sendBtn");
-    const chat = document.getElementById("chat");
+  <div class="chat-container" id="chat"></div>
 
-    function sendMessage() {
-      const text = (input.value || "").trim();
-      if (!text) return;
+<div class="chat-input">
+  <input id="messageInput" placeholder="Type a message..." />
+  <button id="sendBtn" type="button">Send</button>
+</div>
 
-      const msg = document.createElement("div");
-      msg.className = "chat-message self";
-      msg.textContent = text;
+</script>
 
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
-      input.value = "";
-      input.focus();
-    }
+<script>
+  const input = document.getElementById("messageInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const chat = document.getElementById("chat");
 
-    sendBtn.addEventListener("click", sendMessage);
+  function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
+    const msg = document.createElement("div");
+    msg.textContent = text;
+    chat.appendChild(msg);
+    input.value = "";
+  }
+
+  sendBtn.addEventListener("click", sendMessage);
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter") sendMessage();
   });
 </script>
+
 
 </body>
 </html>
