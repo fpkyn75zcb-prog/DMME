@@ -176,16 +176,14 @@ body {
   outline: none;
 }
 
-.send-btn {
-  cursor: pointer;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 30px;
-  background: var(--primary-color);
-  color: var(--bg-color);
-  transition: background 0.3s;
+#sendBtn {
+  height: 40px;
+  width: 80px;
+  border-radius: 6px; /* square, not pill */
+  font-size: 0.85rem;
+  padding: 0;
 }
+
 
 .send-btn:hover {
   background: var(--secondary-color);
