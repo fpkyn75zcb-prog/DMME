@@ -42,7 +42,7 @@ export async function onRequest() {
       display: flex;
       border-top: 1px solid #333;
       
-      bottom: 0;
+      
     }
 
     }
