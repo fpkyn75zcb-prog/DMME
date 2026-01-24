@@ -57,6 +57,25 @@ function copyLink() {
     status.style.opacity = "0";
   }, 2000);
 }
+<script>
+const input = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+
+sendBtn.onclick = () => {
+  if (!input.value) return;
+
+  const msg = document.createElement("div");
+  msg.textContent = input.value;
+  msg.style.padding = "8px";
+  msg.style.margin = "4px";
+  msg.style.background = "#222";
+  msg.style.color = "#fff";
+
+  document.body.appendChild(msg);
+  input.value = "";
+};
+</script>
+
 </script>
 <input id="messageInput" placeholder="Type a message…" style="position:fixed; bottom:0; left:0; width:80%; padding:14px; border:none; outline:none;" />
 <button id="sendBtn" style="position:fixed; bottom:0; right:0; width:20%; padding:14px; border:none; background:#1e90ff; color:#fff;">Send</button>
