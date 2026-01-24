@@ -201,3 +201,4 @@ button:focus {
   placeholder="Click to name room"
   onkeydown="if(event.key==='Enter'){saveRoomName()}"
 />
+<p id="copyStatus"></p>
