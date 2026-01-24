@@ -47,9 +47,19 @@ setTimeout(() => {
     status.textContent = '';
   }, 1500);
 }
+<script>
+function copyLink() {
+  navigator.clipboard.writeText(window.location.href);
 
+  const status = document.getElementById("copystatus");
+  status.textContent = "Link copied!";
+  status.style.opacity = "1";
+
+  setTimeout(() => {
+    status.style.opacity = "0";
+  }, 2000);
+}
 </script>
-
 </body>
 </html>
     `,
