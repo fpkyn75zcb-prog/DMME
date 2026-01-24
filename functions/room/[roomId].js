@@ -70,16 +70,17 @@ export async function onRequest() {
 
 }
 
-    .chat-input button {
-      padding: 0 16px;
-      background: #3b82f6;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      position: absolute;
-      right: 0;
-    }
+    ..chat-input button {
+  height: 40px;
+  margin-left: 12px;
+  padding: 0 16px;
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
   </style>
 </head>
 <body>
