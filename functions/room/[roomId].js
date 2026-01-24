@@ -75,6 +75,21 @@ sendBtn.onclick = () => {
   input.value = "";
 };
 </script>
+<script>
+const input = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+
+sendBtn.onclick = () => {
+  if (!input.value.trim()) return;
+
+  const msg = document.createElement("div");
+  msg.className = "chat-message self";
+  msg.textContent = input.value;
+
+  document.querySelector(".chat-container").appendChild(msg);
+  input.value = "";
+};
+</script>
 
 </script>
 <div class="chat-input">
