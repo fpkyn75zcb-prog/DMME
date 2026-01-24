@@ -40,7 +40,7 @@ export async function onRequest() {
 
    .chat-input {
   width: 100%
-  bacground:#000;
+  bacground:#000000;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -59,7 +59,7 @@ export async function onRequest() {
   flex: 1;
   height: 100%;
   color: #000000;
-  background:#000000;
+  background:transparent;
   border: none;
   outline: none;
   font-size: 16px;
