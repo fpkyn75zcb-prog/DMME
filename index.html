@@ -20,30 +20,10 @@
         Create a room for $2, share the link, and chat in real time.<br />
         Unlimited guests. Room expires in 24 hours.
       </p>
-<button id="startButton" type="button" class="primary-btn">Start Chatting</button>
     </div>
    <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const button = document.getElementById('startButton');
-  if (!button) return;
+<a href="/create-room" class="primary-btn">Start Chatting</a>
 
-  button.addEventListener('click', async () => {
-
-    try {
-      const response = await fetch('/create-room', {
-        method: 'POST'
-      });
-
-      const data = await response.json();
-
-      if (data.roomId) {
-        window.location.href = `/room/${data.roomId}`;
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  });
-});
 </script>
 </body>
 </html>
