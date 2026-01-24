@@ -55,12 +55,11 @@ export async function onRequest() {
   .chat-input input {
   flex: 1;
   padding: 12px;
-  background: #000000;
-  color: #b0b0b0;
   border: none;
   outline: none;
   font-size: 16px;
 }
+
 
 }
 
