@@ -39,11 +39,14 @@ export async function onRequest() {
 
 
     .chat-input {
-      display: flex;
-      border-top: 1px solid #333;
-      
-      
-    }
+  display: flex;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #ffffff;
+}
+
 
     }
     .chat-input input {
