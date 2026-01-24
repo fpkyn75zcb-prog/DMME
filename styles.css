@@ -213,3 +213,37 @@ button:focus {
   padding: 0.5rem;
   background: var(--bg-color);
 }
+.chat-input {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: var(--bg-color);
+  border-top: 1px solid var(--border-color);
+}
+
+.message-input {
+  flex: 1;
+  height: 42px;
+  padding: 0 12px;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  color: var(--text-color);
+  border-radius: 6px;
+}
+
+.send-btn {
+  height: 42px;
+  width: 72px;
+  margin-left: 8px;
+  border-radius: 4px; /* square */
+  font-size: 0.9rem;
+  background: #1e90ff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
