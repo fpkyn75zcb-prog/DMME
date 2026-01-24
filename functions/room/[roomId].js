@@ -39,26 +39,33 @@ export async function onRequest() {
 
 
    .chat-input {
-  display: flex;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
   background: #000000;
-  padding: 12px;
+  padding: 8px 12px;
   box-sizing: border-box;
 }
 
 
 
+
     }
-  .chat-input input {
+.chat-input input::placeholder {
+  color: #7a7a7a;
   flex: 1;
-  padding: 12px;
+  height: 40px;
+  background: #000000;
+  color: #9e9e9e;
   border: none;
   outline: none;
   font-size: 16px;
 }
+
 
 
 }
