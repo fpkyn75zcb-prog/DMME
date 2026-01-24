@@ -38,26 +38,31 @@ export async function onRequest() {
 }
 
 
-    .chat-input {
-  display: flex;
-  width: 100%;
+   .chat-input {
   position: fixed;
   bottom: 0;
   left: 0;
-  background: #ffffff;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  background: #000;
+  padding: 0 12px;
+  box-sizing: border-box;
+
+
+
+    }
+   }.chat-input input {
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  color: #fff;
+  border: none;
+  outline: none;
+  font-size: 16px;
 }
 
-
-    }
-    .chat-input input {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-      background: #000;
-      color: #fff;
-    }
     .chat-input button {
       padding: 0 16px;
       background: #3b82f6;
