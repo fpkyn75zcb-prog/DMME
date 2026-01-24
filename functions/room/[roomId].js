@@ -38,9 +38,7 @@ setTimeout(() => {
 }, 1500);
 
 
-  const status = document.getElementById('copyStatus');
-  status.textContent = 'Link copied';
-  status.style.opacity = '1';
+  
 
   setTimeout(() => {
     status.style.opacity = '0';
