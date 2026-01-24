@@ -7,6 +7,16 @@ export async function onRequest() {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chat Room</title>
   <style>
+  body {
+  margin: 0;
+  background: linear-gradient(135deg, #ff4fd8, #7b5cff, #1fa2ff);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
     body {
       margin: 0;
       background: #0b0b12;
@@ -98,9 +108,11 @@ export async function onRequest() {
         sendMessage();
       }
     });
-    function copyLink() {
+function copyLink() {
   navigator.clipboard.writeText(window.location.href);
+  alert("Room link copied");
 }
+
 
   </script>
 
