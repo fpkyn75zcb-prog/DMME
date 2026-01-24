@@ -37,9 +37,7 @@ return new Response(`
 </div>
 
 <script>
-  <div class="chat-container" id="chat"></div>
 
-<div class="chat-input">
   <input id="messageInput" placeholder="Type a message..." />
   <button id="sendBtn" type="button">Send</button>
 </div>
