@@ -40,6 +40,7 @@ export async function onRequest() {
 
    .chat-input {
   width: 100%
+  bacground:#000;
   position: fixed;
   bottom: 0;
   left: 0;
