@@ -55,6 +55,8 @@ export async function onRequest() {
       border: none;
       outline: none;
       font-size: 16px;
+      background: #000;
+      color: #fff;
     }
     .chat-input button {
       padding: 0 16px;
@@ -63,6 +65,8 @@ export async function onRequest() {
       border: none;
       cursor: pointer;
       font-size: 16px;
+      position: absolute;
+      right: 0;
     }
   </style>
 </head>
