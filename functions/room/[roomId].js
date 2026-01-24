@@ -74,12 +74,11 @@ sendBtn.onclick = () => {
   document.body.appendChild(msg);
   input.value = "";
 };
-</script>
 <script>
 const input = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 
-sendBtn.onclick = () => {
+function sendMessage() {
   if (!input.value.trim()) return;
 
   const msg = document.createElement("div");
@@ -88,8 +87,20 @@ sendBtn.onclick = () => {
 
   document.querySelector(".chat-container").appendChild(msg);
   input.value = "";
-};
+}
+
+sendBtn.addEventListener("click", sendMessage);
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    sendMessage();
+  }
+});
 </script>
+
+
+
 
 </script>
 <div class="chat-input">
