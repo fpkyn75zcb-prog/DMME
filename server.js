@@ -26,7 +26,6 @@ const io = new Server(server);
 const rooms = {};
 
 // Serve static assets from the `public` folder
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
 /**
