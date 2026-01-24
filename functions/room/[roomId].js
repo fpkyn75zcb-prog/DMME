@@ -58,8 +58,8 @@ export async function onRequest() {
    }.chat-input input {
   flex: 1;
   height: 100%;
-  background: transparent;
   color: #000000;
+  background: transparent;
   border: none;
   outline: none;
   font-size: 16px;
