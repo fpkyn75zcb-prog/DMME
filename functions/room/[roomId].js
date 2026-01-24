@@ -48,7 +48,7 @@ export async function onRequest() {
   height: 56px;
   display: flex;
   align-items: center;
-  background: #000;
+  background: #000000;
   padding: 0 12px;
   box-sizing: border-box;
 
