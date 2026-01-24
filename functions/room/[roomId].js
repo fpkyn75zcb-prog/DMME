@@ -17,9 +17,7 @@ export async function onRequest() {
   height: 100vh;
 }
 
-    body {
-      margin: 0;
-      background: #0b0b12;
+    
       color: #fff;
       font-family: Arial, sans-serif;
       display: flex;
