@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   );
 }
-<script>
+<script defer>
 const input = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
 const chat = document.querySelector(".chat-container");
