@@ -75,27 +75,29 @@ sendBtn.onclick = () => {
   input.value = "";
 };
 <script>
-const input = document.getElementById("messageInput");
-const sendBtn = document.getElementById("sendBtn");
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("messageInput");
+  const sendBtn = document.getElementById("sendBtn");
 
-function sendMessage() {
-  if (!input.value.trim()) return;
+  function sendMessage() {
+    if (!input.value.trim()) return;
 
-  const msg = document.createElement("div");
-  msg.className = "chat-message self";
-  msg.textContent = input.value;
+    const msg = document.createElement("div");
+    msg.className = "chat-message self";
+    msg.textContent = input.value;
 
-  document.querySelector(".chat-container").appendChild(msg);
-  input.value = "";
-}
-
-sendBtn.addEventListener("click", sendMessage);
-
-input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    sendMessage();
+    document.querySelector(".chat-container").appendChild(msg);
+    input.value = "";
   }
+
+  sendBtn.addEventListener("click", sendMessage);
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
 });
 </script>
 
