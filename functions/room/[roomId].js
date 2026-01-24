@@ -59,7 +59,7 @@ export async function onRequest() {
   flex: 1;
   height: 100%;
   color: #000000;
-  background: transparent;
+  background:#000000;
   border: none;
   outline: none;
   font-size: 16px;
